@@ -1,5 +1,6 @@
 package org.example.generic.controller;
 
+import org.example.generic.controller.support.generic.annotation.EnabledGeneric;
 import org.example.generic.controller.util.DefaultProfileUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,6 +12,7 @@ import org.springframework.core.env.Environment;
  * @author hungp
  */
 @SpringBootApplication
+@EnabledGeneric
 public class Application {
 
     private final Environment env;
