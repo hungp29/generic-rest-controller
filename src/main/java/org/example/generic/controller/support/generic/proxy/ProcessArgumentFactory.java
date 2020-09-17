@@ -34,8 +34,10 @@ public class ProcessArgumentFactory {
                     return SpringContext.getBean(ProcessArgumentReadOneMethod.class);
                 case READ_ALL:
                     return SpringContext.getBean(ProcessArgumentReadAllMethod.class);
-                default:
-                    return null;
+                case UPDATE_PART:
+                    return SpringContext.getBean(ProcessArgumentUpdatePartMethod.class);
+                case UPDATE_ALL:
+                    return SpringContext.getBean(ProcessArgumentUpdateAllMethod.class);
             }
         }
         return null;

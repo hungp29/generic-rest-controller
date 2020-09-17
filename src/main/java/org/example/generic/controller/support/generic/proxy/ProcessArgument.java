@@ -1,10 +1,13 @@
 package org.example.generic.controller.support.generic.proxy;
 
 import org.apache.catalina.connector.RequestFacade;
+import org.example.generic.controller.support.generic.annotation.APIGeneric.APIGenericMethod;
+import org.example.generic.controller.support.generic.annotation.GenericController;
 import org.example.generic.controller.support.generic.exception.GenericException;
 import org.example.generic.controller.support.generic.util.CommonUtil;
 import org.example.generic.controller.support.generic.util.Constant;
 import org.example.generic.controller.support.generic.util.GenericUtil;
+import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -206,6 +209,51 @@ public abstract class ProcessArgument {
                 if (null != arg && RequestFacade.class.isAssignableFrom(arg.getClass())) {
                     return (HttpServletRequest) arg;
                 }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get response DTO type base on Controller Type and Generic Method.
+     *
+     * @param controllerType controller type
+     * @param genericMethod  generic method
+     * @return response type of DTO
+     */
+    protected Class<?> getDTOResponseType(Class<?> controllerType, APIGenericMethod genericMethod) {
+        GenericController genericController = AnnotatedElementUtils.findMergedAnnotation(controllerType, GenericController.class);
+        if (null != genericController && null != genericMethod) {
+            switch (genericMethod) {
+                case CREATE:
+                    return genericController.createResponse();
+                case READ_ONE:
+                case READ_ALL:
+                    return genericController.readResponse();
+                case UPDATE_PART:
+                case UPDATE_ALL:
+                    return genericController.updateResponse();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get request DTO type base on Controller Type and Generic Method.
+     *
+     * @param controllerType controller type
+     * @param genericMethod  generic method
+     * @return request type of DTO
+     */
+    protected Class<?> getDTORequestType(Class<?> controllerType, APIGenericMethod genericMethod) {
+        GenericController genericController = AnnotatedElementUtils.findMergedAnnotation(controllerType, GenericController.class);
+        if (null != genericController && null != genericMethod) {
+            switch (genericMethod) {
+                case CREATE:
+                    return genericController.createRequest();
+                case UPDATE_PART:
+                case UPDATE_ALL:
+                    return genericController.updateRequest();
             }
         }
         return null;

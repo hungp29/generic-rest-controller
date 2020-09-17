@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
+import static org.example.generic.controller.support.generic.annotation.APIGeneric.APIGenericMethod.READ_ALL;
+
 /**
  * Class extends {@link ProcessArgument} for Read All Method.
  *
@@ -34,7 +36,7 @@ public class ProcessArgumentReadAllMethod extends ProcessArgument {
                 String[] filter = getFilterFields(request);
                 // Map params
                 Map<String, String> params = getParameters(request);
-                FilterData filterData = new FilterData(filter, params);
+                FilterData filterData = new FilterData(getDTOResponseType(controllerType, READ_ALL), filter, params);
                 return new Object[]{filterData, pagination};
             } else {
                 throw new GenericException("Cannot find HttpServletRequest in array arguments of method");
