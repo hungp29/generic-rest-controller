@@ -1,7 +1,12 @@
 package org.example.generic.controller.support.generic;
 
 import org.example.generic.controller.rest.Audit;
-import org.example.generic.controller.support.generic.annotation.*;
+import org.example.generic.controller.support.generic.annotation.APICreate;
+import org.example.generic.controller.support.generic.annotation.APIDelete;
+import org.example.generic.controller.support.generic.annotation.APIReadAll;
+import org.example.generic.controller.support.generic.annotation.APIReadOne;
+import org.example.generic.controller.support.generic.annotation.APIUpdateAll;
+import org.example.generic.controller.support.generic.annotation.APIUpdatePart;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,7 +36,7 @@ public class GenericRestController<T extends Audit> {
      * @return result after read data by id
      */
     @APIReadOne("/{id}")
-    public <ID> ResponseEntity<Object> readOne(@PathVariable ID id) {
+    public <ID> ResponseEntity<Object> readOne(@PathVariable ID id, FilterData filterData) {
         return ResponseEntity.ok("Read One");
     }
 
@@ -41,7 +46,7 @@ public class GenericRestController<T extends Audit> {
      * @return result after read all data
      */
     @APIReadAll
-    public ResponseEntity<Object> readAll() {
+    public ResponseEntity<Object> readAll(FilterData filterData, Pagination pagination) {
         return ResponseEntity.ok("Read All");
     }
 
